@@ -1,5 +1,6 @@
 <?php
 
+require_once "convert.php";
 if (!isset($connection)) {
     require_once $_SERVER['DOCUMENT_ROOT'] . "/database/database.php";
 }
@@ -33,7 +34,7 @@ if ($_GET["url"]) {
             $url = $connection->query("INSERT INTO urls (url) VALUE ('$url')");
             $id = $connection->lastInsertId();
         }
-
+//        $id = convBase($id, '0123456789', 'QqRrSsDdOoPpHhVvXx123467890');
         $url = "http://" . $_SERVER["SERVER_NAME"] . "/" . $id;
         ?>
 
