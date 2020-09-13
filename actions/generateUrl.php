@@ -23,8 +23,16 @@ function urlExists($url=NULL)
     }
 }
 
-if ($_GET["url"]) {
-    $url = $_GET["url"];
+    error_log(print_r($_POST, TRUE));
+
+if ($_POST["url"]) {
+    $url = $_POST["url"];
+    foreach ($_POST as $key => $value) {
+        if ($key != 'url') {
+            $value = str_replace(" ", "+", $value);
+            $url .= '&' . $key . '=' . $value;
+        }
+    }
     if (urlExists($url)) {
         $id = $connection->prepare("SELECT id FROM urls WHERE url = '$url'");
         $id->execute();

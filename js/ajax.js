@@ -1,8 +1,10 @@
 $('button').on('click', function (){
     let url = $('#url').val();
+    console.log(url);
 
     $.ajax({
-        type: "GET",
+        type: "POST",
+        dataType: 'string',
         data: 'url=' + url,
         url: 'actions/generateUrl.php',
         success: function (res) {
