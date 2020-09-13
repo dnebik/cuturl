@@ -1,10 +1,21 @@
 <?php
 
+require_once "database/database.php";
+/* @var $connection PDO */
+
 $link = explode("/", $_SERVER["REQUEST_URI"]);
 $link = array_reverse($link)[0];
 
 if (!in_array($link, ["", "index", "index.php"])) {
-    //проверка на редирект и редирект
+    $link = $connection->prepare("SELECT url FROM urls WHERE id = '$link'");
+    $link->execute();
+    $link = $link->fetch(PDO::FETCH_ASSOC)['url'];
+
+    if ($link) {
+        $link = str_replace(["http://", "https://"], "", $link);
+        header("Location: http://$link");
+        die();
+    }
 }
 
 ?>
